@@ -46,6 +46,7 @@ public:
     matrix operator*(matrix);
     friend ostream& operator<<(ostream &fout, const matrix&);
     friend istream& operator>>(istream &in, matrix&);
+    // проверка
 };
 
 void solve(){
