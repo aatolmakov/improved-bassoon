@@ -39,6 +39,7 @@ using ld = long double;
 using ll = long long;
 
 class matrix{
+    vvi mtrx;
 public:
     matrix operator+(matrix);
     matrix operator*(int);
@@ -56,9 +57,16 @@ public:
             }
         }
     }
-    vvi mtrx;
+    void transpon(){
+        vvi v(mtrx[0].size());
+        for(int i = 0; i < mtrx[0].size(); ++i){
+            for(int j = 0; j < mtrx.size(); ++j){
+                v[i].pb(mtrx[j][i]);
+            }
+        }
+        *this = matrix(v);
+    }
 };
-// добавление ввода и вывода
 ostream& operator<<(ostream &mout, const matrix &v){
     for(int i = 0; i < v.mtrx.size(); ++i){
         for(int j = 0; j < v.mtrx[i].size(); ++j){
@@ -79,6 +87,7 @@ void solve(){
     int n, m; cin >> n >> m;
     matrix a(n, m);
     cin >> a;
+    a.transpon();
     cout << a;
 }
 signed main(){
