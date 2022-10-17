@@ -67,6 +67,29 @@ public:
         *this = matrix(v);
     }
 };
+
+matrix matrix::operator*(int val){
+    for(int i = 0; i < mtrx.size(); ++i){
+        for(int j = 0; j < mtrx[0].size(); ++j){
+            mtrx[i][j] *= val;
+        }
+    } return *this;
+}
+//в случае несовпадения игнорирует действие
+matrix matrix::operator+(matrix a){
+    vvi ans(a.mtrx.size());
+    if(a.mtrx[0].size() != mtrx[0].size() || a.mtrx.size() != mtrx.size()){
+        return mtrx;
+    } else{
+        for(int i = 0; i < mtrx.size(); ++i){
+            for(int j = 0; j < mtrx[0].size(); ++j){
+                ans[i].pb(a.mtrx[i][j] + mtrx[i][j]);
+            }
+        }
+    }
+    return ans;
+}
+
 ostream& operator<<(ostream &mout, const matrix &v){
     for(int i = 0; i < v.mtrx.size(); ++i){
         for(int j = 0; j < v.mtrx[i].size(); ++j){
@@ -84,11 +107,25 @@ istream& operator>>(istream &min, matrix &v){
     return min;
 }
 void solve(){
-    int n, m; cin >> n >> m;
+    int n, m;
+    cin >> n >> m;
     matrix a(n, m);
+
+    int n1, m1;
+    cin >> n1 >> m1;
+    matrix b(n1, m1);
+
     cin >> a;
-    a.transpon();
-    cout << a;
+    cin >> b;
+
+    cout << a + b;
+
+    int n2, m2;
+    cin >> n2 >> m2;
+    matrix c(n2, m2);
+
+    int value; cin >> value;
+    cout << c * value;
 }
 signed main(){
     solve(); return 0;
