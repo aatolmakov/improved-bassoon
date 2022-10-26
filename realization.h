@@ -64,39 +64,38 @@ public:
         }
         *this = matrix(v);
     }
-/*    рекурсивное возведние:
-      степень возможна только для квадратной матрицы,
-      так что если она не квадратная, игнорирует действие
-*/
-    matrix overspeeddegree(int val){
-        if(mtrx.size() != mtrx[0].size()){
-            return mtrx;
-        } else{
-            if(val == 0){
-                return matrix(mtrx.size(), mtrx[0].size(), 1);
-            } else if(val == 1){
-                return *this;
-            } else if(val % 2 == 1){
-                return overspeeddegree(val - 1) * mtrx;
-            } else{
-                return overspeeddegree(val / 2) * overspeeddegree(val / 2);
+    matrix overspeeddegree(int val) {
+        if (mtrx.size() != mtrx[0].size()) {
+            throw string("Невозможно возведение в степень: матрица не квадратная");
+        } else {
+            matrix ans = *this;
+            matrix value = *this;
+            while (val > 0) {
+                if (val % 2) {
+                    ans = ans * value;
+                    val -= 1;
+                } else {
+                    value = value * value;
+                    val /= 2;
+                }
             }
+            return ans;
         }
     }
 };
 matrix matrix::operator*(int val){
+    matrix d = *this;
     for(int i = 0; i < mtrx.size(); ++i){
         for(int j = 0; j < mtrx[0].size(); ++j){
-            mtrx[i][j] *= val;
+            d.mtrx[i][j] *= val;
         }
-    } return *this;
+    } return d;
 }
 
 matrix matrix::operator*(matrix a){
-    // проверка на соответствие размеров, в случае несовпадения игнорирует действие
     matrix ans(mtrx.size(), a.mtrx[0].size());
     if(mtrx[0].size() != a.mtrx.size()){
-        return *this;
+        throw string("Ошибка умножения: длина строк первой матрицы несовпадает с длиной столбцов второй матрицы");
     } else{
         for(int i = 0; i < mtrx.size(); ++i){
             for(int j = 0; j < a.mtrx[i].size(); ++j){
@@ -115,7 +114,7 @@ matrix matrix::operator*(matrix a){
 matrix matrix::operator+(matrix a){
     vvi ans(a.mtrx.size());
     if(a.mtrx[0].size() != mtrx[0].size() || a.mtrx.size() != mtrx.size()){
-        return mtrx;
+        throw string("Ошибка сложения: размеры матриц не совпадают!");
     } else{
         for(int i = 0; i < mtrx.size(); ++i){
             for(int j = 0; j < mtrx[0].size(); ++j){

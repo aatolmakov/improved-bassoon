@@ -1,5 +1,4 @@
 #include <iostream>
-#include <Windows.h>
 #include <vector>
 #include "realization.h"
 #define pb push_back
@@ -23,31 +22,37 @@ void solve(){
     cout << "Введите вторую матрицу: " << endl;
     cin >> b;
 
-    cout << "Введите множитель k (на него умножится первая матрица): " << endl;
-    int k;
-    cin >> k;
-    cout << "Введите степень n (в неё возведётся первая матрица): " << endl;
-    int n;
-    cin >> n;
-
-    cout << "Cумма матриц (если верные условия выведет сумму, в противном случае выведет первую матрицу): " << endl;
-    cout << a + b << endl;
-
-    cout << "Произведение матриц (если верные условия выведет произведение, в противном случае выведет первую матрицу): " << endl;
-    cout << a * b << endl;
-
-    cout << "Произведение первой матрицы на k: " << endl;
-    cout << a * k << endl;
-
-    cout << "Первая матрица в степени n (если верные условия выведет первую матрицу в степени n, в противном случае выведет исходную матрицу): " << endl;
-    cout << a + b;
-
-    cout << "Транспонирование первой матрицы: " << endl;
-    a.transpon();
-    cout << a;
+    cout << endl;
+    try{
+        matrix c = a + b;
+        cout << "Cумма матриц: " << endl;
+        cout << c << endl;
+    } catch(string msg){
+        cout <<msg << endl;
+    }
+    try{
+        matrix c = a * b;
+        cout << "Произведение матриц: " << endl;
+        cout << c << endl;
+    } catch(string msg){
+        cout << msg << endl;
+    }
+    cout << "Введите степень для первой матрицы:" << endl;
+    int n; cin >> n;
+    try {
+        matrix x = a.overspeeddegree(n);
+        cout << "Результат возведения: " << endl;
+        cout << x << endl;
+    } catch (string msg){
+        cout << msg << endl;
+    }
+    cout << "Введите множитель для первой матрицы: " << endl;
+    int k; cin >> k;
+    cout << endl;
+    cout << a * k;
 
 }
 signed main(){
-    SetConsoleOutputCP(CP_UTF8);
     solve(); return 0;
 }
+
