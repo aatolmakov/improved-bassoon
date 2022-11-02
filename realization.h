@@ -68,18 +68,17 @@ public:
         if (mtrx.size() != mtrx[0].size()) {
             throw string("Невозможно возведение в степень: матрица не квадратная");
         } else {
-            matrix ans = *this;
-            matrix value = *this;
-            while (val > 0) {
-                if (val % 2) {
-                    ans = ans * value;
-                    val -= 1;
-                } else {
-                    value = value * value;
-                    val /= 2;
-                }
+            if(val == 0){
+                return matrix(mtrx.size(), mtrx[0].size(), 1);
             }
-            return ans;
+            if(val == 1){
+                return *this;
+            }
+            if(val % 2){
+                return overspeeddegree(val - 1) * *this;
+            }
+            matrix its = overspeeddegree(val / 2);
+            return its * its;
         }
     }
 };
